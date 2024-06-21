@@ -1,9 +1,13 @@
-<?php 
-require_once("../core/tailwind.php");
-    Router::run ();
+<?php
+namespace ab\public;
+use ab\core\Router;
+require_once "./../vendor/autoload.php";
+    require_once("../src/core/tailwind.php");
+        Router::run ();
 ?>
 
-<?php 
+<?php
+
 // require_once("../controllers/article.controllers.php");
 // $controller=new ArticleControllers();
 // require_once("../controllers/type.controllers.php");

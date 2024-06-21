@@ -1,7 +1,10 @@
 <?php
-require_once("../model/categorie.model.php");
-require_once("../core/Controller.php");
-require_once("../core/Validator.php");
+namespace ab\controllers;
+use ab\core\Controller;
+use ab\Model\CategorieModel;
+use ab\core\Autorisation;
+use ab\core\Validator;
+use ab\core\Session;
 
 class CategorieControllers extends Controller{
     private CategorieModel $categorieModel;

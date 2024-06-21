@@ -1,4 +1,6 @@
 <?php
+namespace ab\Views;
+use ab\Core\Session;
 $errors = [];
 if (Session::get("errors")) {
     $errors = Session::get("errors");
@@ -45,7 +47,7 @@ if (Session::get("errors")) {
                             </svg>
                         </span>
                         <input
-                            class="shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline <?= add_class_invalid("login") ?>"
+                            class="shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline <?= \ab\Core\add_class_invalid("login") ?>"
                             id="login" type="text" name="login" placeholder="Adresse Mail">
                     </div>
                     <p class="text-red-500 text-xs italic"><?= $errors["login"] ?? "" ?></p>
@@ -63,7 +65,7 @@ if (Session::get("errors")) {
                             </svg>
                         </span>
                         <input
-                            class="shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline  <?= add_class_invalid("password") ?> "
+                            class="shadow appearance-none border rounded w-full py-2 pl-10 pr-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline  <?= \ab\Core\add_class_invalid("password") ?> "
                             id="password" type="password" name="password" placeholder="********">
                     </div>
                     <p class="text-red-500 text-xs italic"><?= $errors["password"] ?? "" ?></p>

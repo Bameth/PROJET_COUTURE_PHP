@@ -1,6 +1,9 @@
 <?php
-require_once("../model/user.model.php");
-require_once("../core/Controller.php");
+namespace ab\controllers;
+use ab\core\Controller;
+use ab\Model\UserModel;
+use ab\core\Validator;
+use ab\core\Session;
 class SecuriteControllers extends Controller{
     private userModel $userModel;
     public function __construct() {

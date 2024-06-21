@@ -1,7 +1,10 @@
 <?php
-require_once("../model/type.model.php");
-require_once("../core/Controller.php");
-require_once("../core/Validator.php");
+namespace ab\controllers;
+use ab\core\Controller;
+use ab\Model\TypeModel;
+use ab\core\Autorisation;
+use ab\core\Validator;
+use ab\core\Session;
 class Typecontrollers extends Controller{
     private TypeModel $typeModel;
     public function __construct() {

@@ -1,3 +1,7 @@
+<?php
+namespace ab\Views;
+use ab\Core\Session;
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

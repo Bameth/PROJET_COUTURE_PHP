@@ -1,9 +1,12 @@
 <?php
-require_once("../core/Model.php");
-class CategorieModel extends Model{
+namespace ab\Model;
+
+use ab\Core\Model;
+
+class CategorieModel extends Model {
     public function __construct() {
         $this->ouvrirConnexion();
-        $this->table="categorie";
+        $this->table = "categorie";
     }
 
     public function modifier(array $categorie): int|null {
@@ -24,6 +27,4 @@ class CategorieModel extends Model{
     public function findByNameCategorie(string $nameCategorie): array|false {
         return $this->executeSelect("SELECT * FROM $this->table WHERE nomCategorie = :nomCategorie", ['nomCategorie' => $nameCategorie], true);
     }
-    
-    
 }

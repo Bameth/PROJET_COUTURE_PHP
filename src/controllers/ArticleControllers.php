@@ -1,8 +1,12 @@
-<?php 
-require_once("../model/article.model.php");
-require_once("../model/categorie.model.php");
-require_once("../model/type.model.php");
-require_once("../core/Controller.php");
+<?php
+namespace ab\controllers;
+use ab\core\Controller;
+use ab\Model\TypeModel;
+use ab\core\Autorisation;
+use ab\core\Validator;
+use ab\core\Session;
+use ab\Model\ArticleModel;
+use ab\Model\CategorieModel;
 class ArticleControllers extends Controller{
     private ArticleModel $articleModel;
     private CategorieModel $categorieModel;

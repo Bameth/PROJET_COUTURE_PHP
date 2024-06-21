@@ -1,3 +1,11 @@
+<?php
+namespace ab\Views;
+use ab\Core\Session;
+$errors = [];
+if (Session::get("errors")) {
+    $errors = Session::get("errors");
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -75,7 +83,7 @@
                     <!-- Navigation Links -->
                     <div class="hidden md:flex space-x-8 nav-item">
                         <a href="<?= WEBROOT ?>/?controller=article&action=liste-article"
-                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium <?= has_role("Ad") ?>">Article</a>
+                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium <?= \ab\core\has_role("Ad") ?>">Article</a>
                         <a href="<?= WEBROOT ?>/?controller=type&action=liste-type"
                             class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Type</a>
                         <a href="<?= WEBROOT ?>/?controller=categorie&action=liste-categorie"
@@ -105,3 +113,6 @@
 </main>
 
 </html>
+<?php
+Session::remove("errors");
+?>

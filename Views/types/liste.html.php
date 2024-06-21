@@ -1,4 +1,6 @@
 <?php
+namespace ab\Views;
+use ab\Core\Session;
 $errors = [];
 if (Session::get("errors")) {
     $errors = Session::get("errors");
@@ -26,7 +28,7 @@ if (Session::get("errors")) {
                 <form action="<?= WEBROOT ?>?controller=type&action=save-type" class="mb-6" method="POST">
                     <div class="flex items-center">
                         <input type="text" name="nomType"
-                            class="w-full border-gray-300 rounded-md p-3 focus:outline-none focus:ring focus:border-blue-300 <?= add_class_invalid("nomType") ?>"
+                            class="w-full border-gray-300 rounded-md p-3 focus:outline-none focus:ring focus:border-blue-300 <?= \ab\Core\add_class_invalid("nomType") ?>"
                             placeholder="Nom du nouveau Type">
                         <button name="btnsu" value="btnsu" type="submit"
                             class="ml-4 bg-blue-500 text-white py-3 px-6 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">Ajouter</button>
@@ -132,28 +134,5 @@ if (Session::get("errors")) {
 <?php
 Session::remove("errors");
 ?>
-<script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        let deleteButtons = document.querySelectorAll('.delete-button');
-        let deleteModal = document.getElementById('deleteModal');
-        let confirmDeleteButton = document.getElementById('confirmDelete');
-        let cancelDeleteButton = document.getElementById('cancelDelete');
-        let deleteUrl = '';
-
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                deleteUrl = button.getAttribute('href');
-                deleteModal.classList.remove('hidden');
-            });
-        });
-
-        cancelDeleteButton.addEventListener('click', () => {
-            deleteModal.classList.add('hidden');
-        });
-
-        confirmDeleteButton.addEventListener('click', () => {
-            window.location.href = deleteUrl;
-        });
-    });
-</script>
+<script src="<?=WEBROOT?>/js/Script.js" ></script>
+<script src="<?=WEBROOT?>/js/Type.js" ></script>

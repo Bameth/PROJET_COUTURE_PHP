@@ -3,12 +3,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let deleteModal = document.getElementById('deleteModal');
     let confirmDeleteButton = document.getElementById('confirmDelete');
     let cancelDeleteButton = document.getElementById('cancelDelete');
-    let deleteUrl = '';
+    let articleIdToDelete = null;
 
     deleteButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
-            deleteUrl = button.getAttribute('href');
+            articleIdToDelete = button.getAttribute('data-id');
             deleteModal.classList.remove('hidden');
         });
     });
@@ -18,6 +18,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     confirmDeleteButton.addEventListener('click', () => {
-        window.location.href = deleteUrl;
+        window.location.href = `/?controller=article&action=del-art&id=${articleIdToDelete}`;
     });
 });

@@ -1,4 +1,7 @@
 <?php
+namespace ab\core;
+use ab\Core\Session;
+use ab\Core\Autorisation;
 function add_class_invalid(string $fieldName){
     echo isset(Session::get("errors")[$fieldName])?"is-invalid":"";
 }

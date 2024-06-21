@@ -1,0 +1,21 @@
+{
+    "name": "ab/couture",
+    "description": "gestion atelier couture",
+    "type": "projet",
+    "autoload": {
+        "psr-4": {
+            "ab\\": "src/",
+            "ab\\Controllers\\": "src/controllers/",
+            "ab\\Model\\": "src/model/",
+            "ab\\Core\\": "src/core/",
+            "ab\\Api\\": "src/api/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ameth Ba",
+            "email": "amethba8826@gmail.com"
+        }
+    ],
+    "require": {}
+}
