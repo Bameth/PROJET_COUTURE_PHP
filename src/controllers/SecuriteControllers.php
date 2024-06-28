@@ -43,7 +43,7 @@ class SecuriteControllers extends Controller{
             $userConnect = $this->userModel->findByLoginAndPassword($data["login"], $data["password"]);
             if ($userConnect) {
                 Session::add("userConnect", $userConnect);
-                parent::redirectToRoute("controller=article&action=liste-article");
+                parent::redirectToRoute("controller=article&action=liste-article&page=0");
             } else {
                 Validator::add("error_connection", "Utilisateur introuvable");
                 Session::add("errors", Validator::$errors);

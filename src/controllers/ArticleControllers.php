@@ -24,7 +24,7 @@ class ArticleControllers extends Controller{
 public function load(){
     if (isset($_REQUEST['action'])) {
         if ($_REQUEST['action'] == "liste-article") {
-           $this-> listerArticle();
+           $this-> listerArticle($_REQUEST['page']);
         } elseif ($_REQUEST['action'] == "form-article") {
             $this->chargerFormulaire();
         } elseif ($_REQUEST['action'] == "modif-art") {
@@ -58,10 +58,11 @@ public function load(){
     }
     
 }
-public function listerArticle(): void {
-    $datas = $this->articleModel->findAll();
+public function listerArticle(int $page=0): void {
+    $datas = $this->articleModel->findAll($page,2);
     $this->renderView("article/liste",[
-        "articles"=>$datas
+        "response"=>$datas,
+        "currentPage"=>$page
     ]);
 }
 

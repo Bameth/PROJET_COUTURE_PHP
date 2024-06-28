@@ -41,4 +41,11 @@ class ApproModel extends Model {
     public function findByNameType(string $nameType): array|false {
         return $this->executeSelect("SELECT * FROM $this->table WHERE nomType = :nomType", ['nomType' => $nameType], true);
     }
+    public function findAll(): array {
+        return $this->executeSelect("SELECT * FROM fournisseur f, $this->table a  WHERE a.`fournisseurId`=f.id");
+    }
+
+
 }
+
+

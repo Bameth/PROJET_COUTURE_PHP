@@ -82,12 +82,14 @@ if (Session::get("errors")) {
                     </div>
                     <!-- Navigation Links -->
                     <div class="hidden md:flex space-x-8 nav-item">
-                        <a href="<?= WEBROOT ?>/?controller=article&action=liste-article"
+                        <a href="<?= WEBROOT ?>/?controller=article&action=liste-article&page=0"
                             class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium <?= \ab\core\has_role("Ad") ?>">Article</a>
                         <a href="<?= WEBROOT ?>/?controller=type&action=liste-type"
                             class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Type</a>
                         <a href="<?= WEBROOT ?>/?controller=categorie&action=liste-categorie"
                             class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Categorie</a>
+                        <a href="<?= WEBROOT ?>/?controller=appro&action=liste-appro"
+                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Approvisionnement</a>
                     </div>
                     <!-- Déconnexion -->
                     <a href="<?= WEBROOT ?>/?controller=securite&action=show-form"

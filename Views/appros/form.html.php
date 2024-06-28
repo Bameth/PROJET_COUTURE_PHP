@@ -3,6 +3,8 @@ namespace ab\Views;
 
 use ab\Core\Session;
 
+use function ab\core\dd;
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
