@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau Magnifique</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?= WEBROOT ?>/js/Script.js">
     <style>
         /* Effet de transition au survol */
         tbody tr:hover {
@@ -19,8 +18,8 @@
     <div class="max-w-7xl mx-auto py-6 px-8 sm:px-10 lg:px-12">
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
-                <h1 class="text-3xl font-bold text-gray-800">Liste des Approvisionnements</h1>
-                <a href="<?= WEBROOT ?>/?controller=appro&action=form-appro"
+                <h1 class="text-3xl font-bold text-gray-800">Liste des Fournisseurs</h1>
+                <a href="<?= WEBROOT ?>/?controller=fournisseur&action=form-fournisseur"
                     class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-md transition duration-300">
                     Nouveau
                 </a>
@@ -29,48 +28,64 @@
                 <table class="table-auto w-full border-collapse border border-gray-200">
                     <thead class="bg-blue-200">
                         <tr>
-                            <th class="px-6 py-3 text-center text-sm text-gray-600 uppercase tracking-wider">Date</th>
-                            <th class="px-6 py-3 text-center text-sm text-gray-600 uppercase tracking-wider">Montant
+                            <th class="px-6 py-3 text-center text-sm text-gray-600 uppercase tracking-wider">Nom
+                                Fournisseur
                             </th>
-                            <th class="px-6 py-3 text-center text-sm text-gray-600 uppercase tracking-wider">Fournisseur
+                            <th class="px-6 py-3 text-center text-sm text-gray-600 uppercase tracking-wider">Adresse
                             </th>
                             <th class="px-6 py-3 text-center text-sm text-gray-600 uppercase tracking-wider">Telephone
+                            </th>
+                            <th class="px-6 py-3 text-center text-sm text-gray-600 uppercase tracking-wider">Image
                             </th>
                             <th class="px-6 py-3 text-center text-sm text-gray-600 uppercase tracking-wider">Actions
                             </th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-700">
-                        <?php foreach ($response['data'] as $appro): ?>
+                        <?php foreach ($response['data'] as $fournisseur): ?>
                             <tr>
-                                <td class="px-6 py-4 text-center"><?= $appro['date']; ?></td>
-                                <td class="px-6 py-4 text-center"><?= $appro['montant']; ?></td>
-                                <td class="px-6 py-4 text-center"><?= $appro['nomFournisseur']; ?></td>
-                                <td class="px-6 py-4 text-center"><?= $appro['telFournisseur']; ?></td>
-                                <td class="text-center">
-                                    <a href="<?= WEBROOT ?>/?controller=appro&action=voir-detail&approId=<?= $appro['id']; ?>"
-                                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-md transition duration-300">
-                                        Voir Details
+                                <td class="px-6 py-4 text-center"><?= $fournisseur['nomFournisseur']; ?></td>
+                                <td class="px-6 py-4 text-center"><?= $fournisseur['adresse']; ?></td>
+                                <td class="px-6 py-4 text-center"><?= $fournisseur['telFournisseur']; ?></td>
+                                <td class="px-6 py-4 text-center"><?= $fournisseur['image']; ?></td>
+                                <td class="px-6 py-4 flex justify-center space-x-4">
+                                    <a href="<?= WEBROOT ?>/?controller=fournisseur&action=del-four&id=<?= $fournisseur['id'] ?>"
+                                        class="text-red-500 hover:text-red-700 delete-button"
+                                        data-id="<?= $article['id'] ?>">
+                                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M6 18L18 6M6 6l12 12M6 6l12-12"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="<?= WEBROOT ?>/?controller=fournisseur&action=modif-fournisseur&id=<?= $fournisseur['id'] ?>"
+                                        class="text-green-500 hover:text-green-700">
+                                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 19v-8m0 0V5m0 8h.01m-6 0a3 3 0 11-6 0 3 3 0z"></path>
+                                        </svg>
                                     </a>
                                 </td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>
                 </table>
-                <!-- Pagination -->
-                <div class="flex justify-center mt-6">
-                    <?php for ($i = 0; $i < $response['pages']; $i++): ?>
-                        <a href="<?= WEBROOT ?>/?controller=appro&action=liste-appro&page=<?= $i ?>"
-                            class="mx-1 px-3 py-1 border border-gray-300 bg-white text-gray-600 rounded hover:bg-gray-200 <?= ($i == $currentPage) ? 'bg-gray-300' : '' ?>">
-                            <?= $i + 1 ?>
-                        </a>
-                    <?php endfor ?>
-                </div>
             </div>
+            <!-- Pagination -->
+            <div class="flex justify-center mt-6">
+                <?php for ($i = 0; $i < $response['pages']; $i++): ?>
+                    <a href="<?= WEBROOT ?>/?controller=fournisseur&action=liste-fournisseur&page=<?= $i ?>"
+                        class="mx-1 px-3 py-1 border border-gray-300 bg-white text-gray-600 rounded hover:bg-gray-200 <?= ($i == $currentPage) ? 'bg-gray-300' : '' ?>">
+                        <?= $i + 1 ?>
+                    </a>
+                <?php endfor ?>
+            </div>
+
         </div>
-
     </div>
-
     <!-- Modale de confirmation de suppression -->
     <div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
         <div class="flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0">
@@ -100,7 +115,7 @@
             </div>
         </div>
     </div>
+    <script src="<?= WEBROOT ?>/js/article.js"></script>
 </body>
 
 </html>
-<script src="<?= WEBROOT ?>/js/article.js"></script>

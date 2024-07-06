@@ -11,17 +11,20 @@ class ArticleModel extends Model
         $this->table = "article";
     }
 
-    public function findAll(int $page = 0, int $offset = OFFSET): array
+    public function findAllWithPaginate(int $page = 0, int $offset = OFFSET): array
     {
         $page=$page*$offset;
         $result = $this->executeSelect("SELECT COUNT(*) as nbreArticle FROM `article`", [], true);
-        $data = $this->executeSelect("SELECT a.*,c.nomCategorie,t.nomType FROM $this->table a JOIN categorie c ON a.categorieId = c.id JOIN type t ON a.typeId = t.id limit $page,$offset");
+        $data = $this->executeSelect("SELECT a.id, a.libelle, a.qteStock, a.prixAppro, a.categorieId, a.typeId, c.nomCategorie, t.nomType FROM $this->table a JOIN categorie c ON a.categorieId = c.id JOIN type t ON a.typeId = t.id limit $page,$offset");
         return [
             "totalElements" => $result['nbreArticle'],
             "data" => $data,
             "pages" => ceil($result['nbreArticle'] / $offset)
         ];
     }
+    public function findAll(): array {
+        return $this->executeSelect("SELECT a.id, a.libelle, a.qteStock, a.prixAppro, a.categorieId, a.typeId, c.nomCategorie, t.nomType FROM $this->table a JOIN categorie c ON a.categorieId = c.id JOIN type t ON a.typeId = t.id");
+     }
 
     public function save(array $article): int
     {
@@ -44,6 +47,10 @@ class ArticleModel extends Model
             'articleId' => $article['articleId']
         ]);
     }
+    public function findArticlesByType(string $typeName): array {
+        return $this->executeSelect("SELECT a.id, a.libelle FROM $this->table a JOIN type t ON a.typeId = t.id WHERE t.nomType = :nomType", ['nomType' => $typeName]);
+    }
+    
 
     public function findByLibelle(string $libelle): array|false
     {

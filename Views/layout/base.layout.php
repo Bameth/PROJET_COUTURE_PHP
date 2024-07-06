@@ -15,14 +15,12 @@ if (Session::get("errors")) {
     <title>Navbar</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        /* Custom styles */
         .nav-link:hover::after {
             content: '';
             display: block;
             width: 100%;
             height: 2px;
             background: #6366f1;
-            /* Tailwind Indigo 500 */
             transition: width .3s;
         }
 
@@ -49,6 +47,31 @@ if (Session::get("errors")) {
             background: #6366f1;
             /* Couleur de soulignement */
             transition: width .3s;
+        }
+
+        /* Dropdown styles */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-menu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
         }
     </style>
 </head>
@@ -82,14 +105,22 @@ if (Session::get("errors")) {
                     </div>
                     <!-- Navigation Links -->
                     <div class="hidden md:flex space-x-8 nav-item">
-                        <a href="<?= WEBROOT ?>/?controller=article&action=liste-article&page=0"
-                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium <?= \ab\core\has_role("Ad") ?>">Article</a>
-                        <a href="<?= WEBROOT ?>/?controller=type&action=liste-type"
-                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Type</a>
-                        <a href="<?= WEBROOT ?>/?controller=categorie&action=liste-categorie"
-                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Categorie</a>
-                        <a href="<?= WEBROOT ?>/?controller=appro&action=liste-appro"
+                        <div class="relative dropdown">
+                            <a href="<?= WEBROOT ?>/?controller=article&action=liste-article&page=0"
+                                class=" text-gray-800  px-3 py-2 rounded-md text-sm font-medium <?= \ab\core\has_role("Ad") ?>">Article</a>
+                            <div class="dropdown-menu absolute mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                                <a href="<?= WEBROOT ?>/?controller=type&action=liste-type"
+                                    class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Type</a>
+                                <a href="<?= WEBROOT ?>/?controller=categorie&action=liste-categorie"
+                                    class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Categorie</a>
+                            </div>
+                        </div>
+                        <a href="<?= WEBROOT ?>/?controller=appro&action=liste-appro&page=0"
                             class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Approvisionnement</a>
+                        <a href="<?= WEBROOT ?>/?controller=production&action=liste-production&page=0"
+                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Production</a>
+                        <a href="<?= WEBROOT ?>/?controller=vente&action=liste-vente&page=0"
+                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Ventes</a>
                     </div>
                     <!-- Déconnexion -->
                     <a href="<?= WEBROOT ?>/?controller=securite&action=show-form"
@@ -99,12 +130,9 @@ if (Session::get("errors")) {
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                 d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2" />
                         </svg>
-
-
                     </a>
                 </div>
             </div>
-        </div>
         </div>
     </nav>
 </body>
@@ -113,7 +141,6 @@ if (Session::get("errors")) {
     echo $contentView;
     ?>
 </main>
-
 </html>
 <?php
 Session::remove("errors");

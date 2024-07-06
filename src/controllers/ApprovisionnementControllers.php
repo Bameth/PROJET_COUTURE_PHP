@@ -17,6 +17,7 @@ class ApprovisionnementControllers extends Controller
     private FournisseurModel $fournisseurModel;
     private ApproModel $approModel;
     private ArticleModel $articleModel;
+
     public function __construct()
     {
         parent::__construct();
@@ -28,17 +29,19 @@ class ApprovisionnementControllers extends Controller
         $this->approModel = new ApproModel();
         $this->load();
     }
+
     public function load()
     {
         if (isset($_REQUEST['action'])) {
             if ($_REQUEST['action'] == "liste-appro") {
-                $this->listerAppro();
+                $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 0;
+                $this->listerAppro($page);
             } elseif ($_REQUEST['action'] == "form-appro") {
                 $this->chargerFormulaire();
+            } elseif ($_REQUEST['action'] == "voir-detail") {
+                $approId = isset($_REQUEST['approId']) ? intval($_REQUEST['approId']) : 0;
+                $this->voirDetail($approId);
             } elseif ($_REQUEST['action'] == "save-appro") {
-                // unset($_POST['action']);
-                // unset($_POST['btnsa']);
-                // unset($_POST['controller']);
                 $this->storeArticleInAppro($_POST);
                 exit;
             } elseif ($_REQUEST['action'] == "add-app") {
@@ -48,23 +51,42 @@ class ApprovisionnementControllers extends Controller
             $this->listerAppro();
         }
     }
-    public function listerAppro(): void
+
+    public function listerAppro(int $page = 0): void
     {
-        $datas = $this->fournisseurModel->findAll();
+        $datas = $this->approModel->findAllWithPaginate($page, 4);
         $this->renderView("appros/liste", [
-            "appros" => $this->approModel->findAll()
+            "response" => $datas,
+            "currentPage" => $page
         ]);
     }
 
-    public function chargerFormulaire(): void
-    {
+    public function chargerFormulaire(): void {
         $fournisseurs = $this->fournisseurModel->findAll();
-        $articles = $this->articleModel->findAll();
+        $articles = $this->articleModel->findArticlesByType("Article confection");
         $this->renderView("appros/form", [
             "fournisseurs" => $fournisseurs,
             "articles" => $articles
         ]);
     }
+
+    public function voirDetail(int $approId): void
+{
+    $appro = $this->approModel->findById($approId);
+    $details = $this->approModel->findDetailsByApproId($approId);
+    $fournisseur = $this->fournisseurModel->findById($appro['fournisseurId']);
+    foreach ($details as &$detail) {
+        $article = $this->articleModel->findById($detail['articleId']);
+        $detail['article'] = $article['libelle'];
+    }
+    $this->renderView("appros/formDetail", [
+        "appro" => $appro,
+        "details" => $details,
+        "fournisseur" => $fournisseur
+    ]);
+}
+
+    
     public function chargerFormulaireUpdate(int $articleId): void
     {
         $this->renderView("article/formUpdate", [
@@ -80,6 +102,7 @@ class ApprovisionnementControllers extends Controller
         Session::remove("panier");
         $this->redirectToRoute("controller=appro&action=form-appro");
     }
+
     public function storeArticleInAppro(array $data): void
     {
         if (Session::get("panier") == false) {
@@ -95,7 +118,6 @@ class ApprovisionnementControllers extends Controller
         Session::add("panier", $panier);
         $this->redirectToRoute("controller=appro&action=form-appro");
     }
-
 
     public function update(array $article): void
     {
@@ -115,6 +137,5 @@ class ApprovisionnementControllers extends Controller
         $this->fournisseurModel->modifier($article);
         $this->redirectToRoute("controller=article&action=liste-article");
     }
-
-
 }
+?>

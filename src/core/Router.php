@@ -6,6 +6,9 @@ use ab\controllers\SecuriteControllers;
 use ab\controllers\CategorieControllers;
 use ab\Api\TypeController as ApiTypeController;
 use ab\controllers\ApprovisionnementControllers;
+use ab\controllers\FournisseurControllers;
+use ab\controllers\ProductionControllers;
+use ab\controllers\VenteControllers;
 
 class Router{
     public static function run(){
@@ -18,6 +21,12 @@ class Router{
                 $controller=new CategorieControllers();
             }elseif ($_REQUEST['controller']=='appro') {
                     $controller=new ApprovisionnementControllers();
+            }elseif ($_REQUEST['controller']=='fournisseur') {
+                    $controller=new FournisseurControllers();
+            }elseif ($_REQUEST['controller']=='production') {
+                    $controller=new ProductionControllers();
+            }elseif ($_REQUEST['controller']=='vente') {
+                    $controller=new VenteControllers();
             }elseif ($_REQUEST['controller']=='securite') {
                 $controller=new SecuriteControllers();
             }elseif ($_REQUEST['controller']=='api-type') {

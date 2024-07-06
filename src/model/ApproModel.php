@@ -44,6 +44,20 @@ class ApproModel extends Model {
     public function findAll(): array {
         return $this->executeSelect("SELECT * FROM fournisseur f, $this->table a  WHERE a.`fournisseurId`=f.id");
     }
+    public function findAllWithPaginate(int $page = 0, int $offset = OFFSET): array
+    {
+        $page=$page*$offset;
+        $result = $this->executeSelect("SELECT COUNT(*) as nbreAppro FROM `appro`", [], true);
+        $data = $this->executeSelect("SELECT * FROM fournisseur f, $this->table a  WHERE a.`fournisseurId`=f.id limit $page,$offset");
+        return [
+            "totalElements" => $result['nbreAppro'],
+            "data" => $data,
+            "pages" => ceil($result['nbreAppro'] / $offset)
+        ];
+    }
+    public function findDetailsByApproId(int $approId): array {
+        return $this->executeSelect("SELECT * FROM detail WHERE approId = :approId", ['approId' => $approId]);
+    }
 
 
 }
