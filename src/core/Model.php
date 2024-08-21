@@ -57,4 +57,5 @@ class Model {
         $result = $this->executeSelect("SELECT * FROM $this->table WHERE `id` = :id", ['id' => $id], true);
         return $result ?: null;
     }
+    
 }

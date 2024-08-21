@@ -18,7 +18,7 @@
     <div class="max-w-7xl mx-auto py-6 px-8 sm:px-10 lg:px-12">
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
-                <h1 class="text-3xl font-bold text-gray-800">Liste des Produits</h1>
+                <h1 class="text-3xl font-bold text-gray-800">Liste des Articles</h1>
                 <a href="<?= WEBROOT ?>/?controller=article&action=form-article"
                     class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-md transition duration-300">
                     Nouveau
@@ -28,6 +28,8 @@
                 <table class="table-auto w-full border-collapse border border-gray-200">
                     <thead class="bg-blue-200">
                         <tr>
+                            <th class="px-6 py-3 text-center text-sm text-gray-600 uppercase tracking-wider">Image
+                            </th>
                             <th class="px-6 py-3 text-center text-sm text-gray-600 uppercase tracking-wider">Libellé
                             </th>
                             <th class="px-6 py-3 text-center text-sm text-gray-600 uppercase tracking-wider">Quantité en
@@ -43,6 +45,7 @@
                     <tbody class="text-gray-700">
                         <?php foreach ($response['data'] as $article): ?>
                             <tr>
+                                <td class="px-6 py-4 text-center"><?= $article['image']; ?></td>
                                 <td class="px-6 py-4 text-center"><?= $article['libelle']; ?></td>
                                 <td class="px-6 py-4 text-center"><?= $article['qteStock']; ?></td>
                                 <td class="px-6 py-4 text-center"><?= $article['prixAppro']; ?></td>

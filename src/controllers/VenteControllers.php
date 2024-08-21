@@ -12,6 +12,7 @@ use ab\Model\FournisseurModel;
 use ab\Model\PanierModel;
 use ab\Model\VenteModel;
 use ab\Model\ClientModel;
+use ab\Model\PanierVenteModel;
 
 class VenteControllers extends Controller
 {
@@ -54,10 +55,17 @@ class VenteControllers extends Controller
                 exit;
             } elseif ($_REQUEST['action'] == "add-vente") {
                 $this->storeProd();
+            }elseif ($_REQUEST['action'] == "clear-cart") {
+                $this->clearCart();
             }
         } else {
             $this->listerProd();
         }
+    }
+    public function clearCart(): void
+    {
+        Session::remove("sales_panier");
+        $this->redirectToRoute("controller=vente&action=form-vente");
     }
 
     public function listerProd(int $page = 0, array $filters = []): void
@@ -99,25 +107,37 @@ class VenteControllers extends Controller
 
     public function storeProd(): void
     {
-        $panier = Session::get("panier");
+        $panier = Session::get("sales_panier");
         $this->venteModel->save($panier);
-        Session::remove("panier");
+        Session::remove("sales_panier");
         $this->redirectToRoute("controller=vente&action=form-vente");
     }
 
     public function storeArticleInVente(array $data): void
-    {
-        if (!Session::get("panier")) {
-            $panier = new PanierModel();
-        } else {
-            $panier = Session::get("panier");
-        }
-        $panier->addArticleTrois(
-            $this->articleModel->findById($data["articleId"]),
-            $data["clientId"],
-            $data["qteVente"]
-        );
-        Session::add("panier", $panier);
+{
+    Validator::isEmpty($data['clientId'], 'clientId', 'Le client est obligatoire');
+    Validator::isEmpty($data['articleId'], 'articleId', 'L\'article est obligatoire');
+    Validator::isEmpty($data['qteVente'], 'qteVente', 'La quantité est obligatoire');
+    Validator::isNumeric($data['qteVente'], 'qteVente', 'La quantité doit être un nombre');
+    
+    if (!Validator::isValid()) {
+        Session::add('errors', Validator::$errors);
         $this->redirectToRoute("controller=vente&action=form-vente");
+        return;
     }
+
+    if (!Session::get("sales_panier")) {
+        $panier = new PanierVenteModel;
+    } else {
+        $panier = Session::get("sales_panier");
+    }
+    $panier->addArticleTrois(
+        $this->articleModel->findById($data["articleId"]),
+        $data["clientId"],
+        $data["qteVente"]
+    );
+    Session::add("sales_panier", $panier);
+    $this->redirectToRoute("controller=vente&action=form-vente");
+}
+
 }

@@ -7,18 +7,35 @@
     <title>Tableau Magnifique</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        /* Effet de transition au survol */
+        @keyframes backgroundAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fad0c4);
+            background-size: 600% 600%;
+            animation: backgroundAnimation 10s ease infinite;
+        }
+
         tbody tr:hover {
             background-color: rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
 
-<body class="bg-gray-100">
+<body>
     <div class="max-w-7xl mx-auto py-6 px-8 sm:px-10 lg:px-12">
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
-                <h1 class="text-3xl font-bold text-gray-800">Liste des Productions</h1>
+                <h1 class="text-3xl font-bold text-gray-800">Liste des Ventes</h1>
                 <a href="<?= WEBROOT ?>/?controller=vente&action=form-vente"
                     class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-md transition duration-300">
                     Nouveau
@@ -101,26 +118,26 @@
 </html>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const filterButton = document.getElementById('filter_button');
+        const filterButton = document.getElementById('filter_button');
 
-    filterButton.addEventListener('click', function () {
-        const filterDate = document.getElementById('filter_date').value;
-        const filterClient = document.getElementById('filter_client').value;
-        const filterArticle = document.getElementById('filter_article').value;
+        filterButton.addEventListener('click', function () {
+            const filterDate = document.getElementById('filter_date').value;
+            const filterClient = document.getElementById('filter_client').value;
+            const filterArticle = document.getElementById('filter_article').value;
 
-        let url = '<?= WEBROOT ?>/?controller=vente&action=liste-vente';
+            let url = '<?= WEBROOT ?>/?controller=vente&action=liste-vente';
 
-        if (filterDate) {
-            url += `&filter_date=${encodeURIComponent(filterDate)}`;
-        }
-        if (filterClient) {
-            url += `&filter_client=${encodeURIComponent(filterClient)}`;
-        }
-        if (filterArticle) {
-            url += `&filter_article=${encodeURIComponent(filterArticle)}`;
-        }
+            if (filterDate) {
+                url += `&filter_date=${encodeURIComponent(filterDate)}`;
+            }
+            if (filterClient) {
+                url += `&filter_client=${encodeURIComponent(filterClient)}`;
+            }
+            if (filterArticle) {
+                url += `&filter_article=${encodeURIComponent(filterArticle)}`;
+            }
 
-        window.location.href = url;
+            window.location.href = url;
+        });
     });
-});
 </script>

@@ -23,7 +23,7 @@ use function ab\core\dd;
             
             <div class="mb-4">
                 <p><strong>Date:</strong> <?= $prod['date']; ?></p>
-                <p><strong>Fournisseur:</strong> <?= $tailleur['nomTailleur']; ?></p>
+                <p><strong>Tailleur:</strong> <?= $tailleur['nomTailleur']; ?></p>
             </div>
             
             <!-- Tableau des articles produits -->

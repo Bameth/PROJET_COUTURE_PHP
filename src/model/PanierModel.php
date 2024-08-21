@@ -39,20 +39,20 @@ class PanierModel extends Model {
         $this->tailleur=$tailleur;
         $this->total+=$montantArticle;
     }
-    public function addArticleTrois($article,$client,$qteVente){
-        $montantArticle=$this->montantArticleDeux($article["prixAppro"],$qteVente);
-        $key=$this->articleExiste($article);
-        if ($key!=-1) {
-            $this->articles[$key]["qteVente"]+=$qteVente;
-            $this->articles[$key]["montantArticle"]+=$montantArticle;
-        }else {
-            $article["qteVente"]=$qteVente;
-            $article["montantArticle"]=$montantArticle;
-            $this->articles[]=$article;
-        }
-        $this->client=$client;
-        $this->total+=$montantArticle;
-    }
+    // public function addArticleTrois($article,$client,$qteVente){
+    //     $montantArticle=$this->montantArticleDeux($article["prixAppro"],$qteVente);
+    //     $key=$this->articleExiste($article);
+    //     if ($key!=-1) {
+    //         $this->articles[$key]["qteVente"]+=$qteVente;
+    //         $this->articles[$key]["montantArticle"]+=$montantArticle;
+    //     }else {
+    //         $article["qteVente"]=$qteVente;
+    //         $article["montantArticle"]=$montantArticle;
+    //         $this->articles[]=$article;
+    //     }
+    //     $this->client=$client;
+    //     $this->total+=$montantArticle;
+    // }
     public function montantArticle($prix,$qteAppro){
        return $prix*$qteAppro;
     }

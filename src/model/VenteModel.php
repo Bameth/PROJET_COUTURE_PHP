@@ -12,7 +12,7 @@ class VenteModel extends Model
         $this->table = "vente";
     }
 
-    public function save(PanierModel $panier): int
+    public function save(PanierVenteModel $panier): int
     {
         $date = new \DateTime();
         $date = $date->format('Y-m-d H:i:s');

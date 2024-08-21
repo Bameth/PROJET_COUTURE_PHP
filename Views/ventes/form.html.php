@@ -21,7 +21,7 @@ use function ab\core\dd;
         <form action="<?= WEBROOT ?>" method="post">
             <?php $errors = Session::get('errors') ?? []; ?>
             <div class="mb-4">
-                <label for="tailleurId" class="block text-gray-700 font-bold mb-2">Client:</label>
+                <label for="clientId" class="block text-gray-700 font-bold mb-2">Client:</label>
                 <div class="relative">
                     <select id="clientId" name="clientId" class="block appearance-none w-full bg-gray-100 border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600">
                         <option value="">Sélectionnez un Client</option>
@@ -29,6 +29,9 @@ use function ab\core\dd;
                             <option value="<?= $client['id']; ?>"><?= $client['nomClient']; ?></option>
                         <?php endforeach; ?>
                     </select>
+                    <?php if (isset($errors['clientId'])): ?>
+                        <p class="text-red-500 text-xs italic"><?= $errors['clientId']; ?></p>
+                    <?php endif; ?>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -45,6 +48,9 @@ use function ab\core\dd;
                                 <option value="<?= $article['id']; ?>"><?= $article['libelle']; ?></option>
                             <?php endforeach; ?>
                         </select>
+                        <?php if (isset($errors['articleId'])): ?>
+                            <p class="text-red-500 text-xs italic"><?= $errors['articleId']; ?></p>
+                        <?php endif; ?>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <i class="fas fa-chevron-down"></i>
                         </div>
@@ -53,7 +59,10 @@ use function ab\core\dd;
                 <div class="w-full md:w-1/2 px-4">
                     <label for="qteVente" class="block text-gray-700 font-bold mb-2">Quantité:</label>
                     <div class="relative">
-                        <input type="text" id="qteVente" name="qteVente" class="block appearance-none w-full bg-gray-100 border border-gray-300 text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="Quantité">
+                        <input type="text" id="qteVente" name="qteVente" class="block appearance-none w-full bg-gray-100 border border-gray-300 text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="Quantité" value="<?= $_POST['qteVente'] ?? ''; ?>">
+                        <?php if (isset($errors['qteVente'])): ?>
+                            <p class="text-red-500 text-xs italic"><?= $errors['qteVente']; ?></p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -65,8 +74,7 @@ use function ab\core\dd;
         </form>
         <!-- Tableau du panier -->
         <div id="cart" class="mt-8">
-            <?php
-            if (Session::get("panier") != false): ?>
+            <?php if (Session::get("sales_panier") != false): ?>
                 <h3 class="text-2xl font-bold mb-4 text-purple-700 text-center">Panier</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white rounded-lg shadow">
@@ -79,23 +87,21 @@ use function ab\core\dd;
                             </tr>
                         </thead>
                         <tbody id="cart-items">
-                            <?php foreach (Session::get("panier")->articles as $article): ?>
+                            <?php foreach (Session::get("sales_panier")->articles as $article): ?>
                                 <tr class="border-b border-gray-200">
                                     <td class="py-2 px-4"><?= $article['libelle']; ?></td>
                                     <td class="py-2 px-4"><?= $article['qteVente']; ?></td>
                                     <td class="py-2 px-4"><?= $article['prixAppro']; ?></td>
                                     <td class="py-2 px-4"><?= $article['montantArticle']; ?></td>
                                 </tr>
-                            <?php endforeach;
-                            ?>
-
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
                 <div class="mt-4 text-right">
                     <span class="font-bold text-xl">Montant Total: </span>
-                    <span id="total-amount" class="font-bold text-xl text-purple-700"><?php if (Session::get("panier") != false)
-                        echo Session::get("panier")->total;
+                    <span id="total-amount" class="font-bold text-xl text-purple-700"><?php if (Session::get("sales_panier") != false)
+                        echo Session::get("sales_panier")->total;
                     else
                         echo "0"; ?></span>
                     CFA
@@ -107,15 +113,13 @@ use function ab\core\dd;
                     class="bg-green-500 text-white font-bold py-3 px-8 rounded-full hover:bg-green-700 transition duration-300">
                     Enregistrer
                 </a>
-                <button type="button" id="cancel-cart"
-                    class="bg-red-500 text-white font-bold py-3 px-8 rounded-full hover:bg-red-700 transition duration-300"
-                    name="btncancel" value="btncancel" onclick="window.location.href='<?= WEBROOT ?>'">
-                    Annuler
-                </button>
+                <a href="<?= WEBROOT ?>/?controller=vente&action=clear-cart" id="clear-cart"
+                    class="bg-red-500 text-white font-bold py-3 px-8 rounded-full hover:bg-red-700 transition duration-300">
+                    Vider le panier
+                </a>
                 <?php
             endif; ?>
         </div>
     </div>
 </body>
-
 </html>

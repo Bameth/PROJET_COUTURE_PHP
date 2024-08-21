@@ -116,12 +116,12 @@ if (Session::get("errors")) {
                             </div>
                         </div>
                         <a href="<?= WEBROOT ?>/?controller=appro&action=liste-appro&page=0"
-                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Approvisionnement</a>
+                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium">Approvisionnement</a>
                         <a href="<?= WEBROOT ?>/?controller=production&action=liste-production&page=0"
-                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Production</a>
+                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium">Production</a>
                         <a href="<?= WEBROOT ?>/?controller=vente&action=liste-vente&page=0"
-                            class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium ">Ventes</a>
-                    </div>
+                        class="nav-link text-gray-800 hover:text-indigo-500 px-3 py-2 rounded-md text-sm font-medium">Ventes</a>
+                        </div>
                     <!-- Déconnexion -->
                     <a href="<?= WEBROOT ?>/?controller=securite&action=show-form"
                         class="text-gray-800 hover:text-indigo-500">

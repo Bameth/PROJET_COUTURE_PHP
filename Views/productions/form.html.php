@@ -70,7 +70,7 @@ use function ab\core\dd;
         <!-- Tableau du panier -->
         <div id="cart" class="mt-8">
             <?php
-            if (Session::get("panier") != false): ?>
+            if (Session::get("production_panier") != false): ?>
                 <h3 class="text-2xl font-bold mb-4 text-purple-700 text-center">Panier</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white rounded-lg shadow">
@@ -83,7 +83,7 @@ use function ab\core\dd;
                             </tr>
                         </thead>
                         <tbody id="cart-items">
-                            <?php foreach (Session::get("panier")->articles as $article): ?>
+                            <?php foreach (Session::get("production_panier")->articles as $article): ?>
                                 <tr class="border-b border-gray-200">
                                     <td class="py-2 px-4"><?= $article['libelle']; ?></td>
                                     <td class="py-2 px-4"><?= $article['qteProd']; ?></td>
@@ -98,8 +98,8 @@ use function ab\core\dd;
                 </div>
                 <div class="mt-4 text-right">
                     <span class="font-bold text-xl">Montant Total: </span>
-                    <span id="total-amount" class="font-bold text-xl text-purple-700"><?php if (Session::get("panier") != false)
-                        echo Session::get("panier")->total;
+                    <span id="total-amount" class="font-bold text-xl text-purple-700"><?php if (Session::get("production_panier") != false)
+                        echo Session::get("production_panier")->total;
                     else
                         echo "0"; ?></span>
                     CFA
@@ -111,11 +111,10 @@ use function ab\core\dd;
                     class="bg-green-500 text-white font-bold py-3 px-8 rounded-full hover:bg-green-700 transition duration-300">
                     Enregistrer
                 </a>
-                <button type="button" id="cancel-cart"
-                    class="bg-red-500 text-white font-bold py-3 px-8 rounded-full hover:bg-red-700 transition duration-300"
-                    name="btncancel" value="btncancel" onclick="window.location.href='<?= WEBROOT ?>'">
-                    Annuler
-                </button>
+                <a href="<?= WEBROOT ?>/?controller=production&action=clear-cart" id="clear-cart"
+                    class="bg-red-500 text-white font-bold py-3 px-8 rounded-full hover:bg-red-700 transition duration-300">
+                    Vider le panier
+                </a>
                 <?php
             endif; ?>
         </div>

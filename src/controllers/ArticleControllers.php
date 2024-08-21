@@ -1,5 +1,6 @@
 <?php
 namespace ab\controllers;
+
 use ab\core\Controller;
 use ab\Model\TypeModel;
 use ab\core\Autorisation;
@@ -8,12 +9,14 @@ use ab\core\Session;
 use ab\Model\ArticleModel;
 use ab\Model\CategorieModel;
 
-class ArticleControllers extends Controller {
+class ArticleControllers extends Controller
+{
     private ArticleModel $articleModel;
     private CategorieModel $categorieModel;
     private TypeModel $typeModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         if (!Autorisation::isConnect()) {
             parent::redirectToRoute("controller=securite&action=show-form");
@@ -24,7 +27,8 @@ class ArticleControllers extends Controller {
         $this->load();
     }
 
-    public function load() {
+    public function load()
+    {
         if (isset($_REQUEST['action'])) {
             if ($_REQUEST['action'] == "liste-article") {
                 $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 0;
@@ -62,7 +66,8 @@ class ArticleControllers extends Controller {
         }
     }
 
-    public function listerArticle(int $page = 0): void {
+    public function listerArticle(int $page = 0): void
+    {
         $datas = $this->articleModel->findAllWithPaginate($page, 2);
         $this->renderView("article/liste", [
             "response" => $datas,
@@ -70,14 +75,8 @@ class ArticleControllers extends Controller {
         ]);
     }
 
-    public function chargerFormulaire(): void {
-        $this->renderView("article/form", [
-            "categories" => $this->categorieModel->findAll(),
-            "types" => $this->typeModel->findAll(),
-        ]);
-    }
-
-    public function chargerFormulaireUpdate(int $articleId): void {
+    public function chargerFormulaireUpdate(int $articleId): void
+    {
         $this->renderView("article/formUpdate", [
             "categories" => $this->categorieModel->findAll(),
             "types" => $this->typeModel->findAll(),
@@ -85,7 +84,8 @@ class ArticleControllers extends Controller {
         ]);
     }
 
-    public function storeArticle(array $article): void {
+    public function storeArticle(array $article): void
+    {
         Validator::$errors = [];
         Validator::isEmpty($article['libelle'] ?? '', 'libelle', 'Le libellé est obligatoire.');
         Validator::isEmpty($article['qteStock'] ?? '', 'qteStock', 'La quantité en stock est obligatoire.');
@@ -96,6 +96,7 @@ class ArticleControllers extends Controller {
         Validator::isEmpty($article['type'] ?? '', 'type', 'Le type est obligatoire.');
         if (!Validator::isValid()) {
             Session::add("errors", Validator::$errors);
+            Session::add("old", $article);
             parent::redirectToRoute("controller=article&action=form-article");
             exit;
         }
@@ -103,6 +104,7 @@ class ArticleControllers extends Controller {
         if ($articleExistant) {
             Validator::add('libelle', 'Le libellé existe déjà.');
             Session::add("errors", Validator::$errors);
+            Session::add("old", $article);
             parent::redirectToRoute("controller=article&action=form-article");
             exit;
         }
@@ -111,7 +113,20 @@ class ArticleControllers extends Controller {
         exit;
     }
 
-    public function update(array $article): void {
+    public function chargerFormulaire(): void
+    {
+        $old = Session::get('old') ?? [];
+        Session::remove('old');
+        $this->renderView("article/form", [
+            "categories" => $this->categorieModel->findAll(),
+            "types" => $this->typeModel->findAll(),
+            "old" => $old
+        ]);
+    }
+
+
+    public function update(array $article): void
+    {
         Validator::$errors = [];
         Validator::isEmpty($article['libelle'] ?? '', 'libelle', 'Le libellé est obligatoire.');
         Validator::isEmpty($article['qteStock'] ?? '', 'qteStock', 'La quantité en stock est obligatoire.');
