@@ -138,4 +138,3 @@ class ApprovisionnementControllers extends Controller
         $this->redirectToRoute("controller=article&action=liste-article");
     }
 }
-?>
