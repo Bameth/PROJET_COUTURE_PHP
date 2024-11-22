@@ -107,7 +107,8 @@ class ProductionControllers extends Controller
     public function storeProd(): void
     {
         $panier = Session::get("production_panier");
-        $this->prodModel->save($panier);
+        $observation = $_POST['observation'] ?? 'parfait';
+        $this->prodModel->save($panier,$observation);
         Session::remove("production_panier");
         $this->redirectToRoute("controller=production&action=form-prod");
     }

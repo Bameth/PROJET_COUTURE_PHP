@@ -45,7 +45,9 @@
                     <tbody class="text-gray-700">
                         <?php foreach ($response['data'] as $article): ?>
                             <tr>
-                                <td class="px-6 py-4 text-center"><?= $article['image']; ?></td>
+                                <td class="px-6 py-4 text-center">
+                                    <img src="img/<?= htmlspecialchars($article['image']); ?>" alt="<?= htmlspecialchars($article['libelle']); ?>" class="w-16 h-16 object-cover">
+                                </td>
                                 <td class="px-6 py-4 text-center"><?= $article['libelle']; ?></td>
                                 <td class="px-6 py-4 text-center"><?= $article['qteStock']; ?></td>
                                 <td class="px-6 py-4 text-center"><?= $article['prixAppro']; ?></td>

@@ -1,4 +1,5 @@
 <?php
+
 namespace ab\Views;
 
 use ab\Core\Session;
@@ -8,6 +9,7 @@ use function ab\core\dd;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +17,7 @@ use function ab\core\dd;
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body class="bg-gradient-to-r from-blue-200 to-purple-300 min-h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl mx-auto mt-4 mb-4">
         <h2 class="text-3xl font-bold mb-6 text-center text-purple-700">Ajouter une Production</h2>
@@ -59,8 +62,11 @@ use function ab\core\dd;
             </div>
             <div class="mb-4">
                 <label for="observation" class="block text-gray-700 font-bold mb-2">Observation:</label>
-                <textarea id="observation" name="observation" class="block w-full bg-gray-100 border border-gray-300 text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600" rows="4" placeholder="Ajoutez une observation"></textarea>
+                <div class="relative">
+                    <textarea id="observation" name="observation" class="block appearance-none w-full bg-gray-100 border border-gray-300 text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="Observation"></textarea>
+                </div>
             </div>
+
             <div class="flex items-center justify-end">
                 <input type="hidden" name="action" value="save-prod">
                 <input type="hidden" name="controller" value="production">
@@ -99,23 +105,23 @@ use function ab\core\dd;
                 <div class="mt-4 text-right">
                     <span class="font-bold text-xl">Montant Total: </span>
                     <span id="total-amount" class="font-bold text-xl text-purple-700"><?php if (Session::get("production_panier") != false)
-                        echo Session::get("production_panier")->total;
-                    else
-                        echo "0"; ?></span>
+                                                                                            echo Session::get("production_panier")->total;
+                                                                                        else
+                                                                                            echo "0"; ?></span>
                     CFA
                 </div>
-            </div>
-            <!-- Boutons Enregistrer et Annuler -->
-            <div class="mt-8 flex justify-center space-x-4">
-                <a href="<?= WEBROOT ?>/?controller=production&action=add-prod" id="add-prod"
-                    class="bg-green-500 text-white font-bold py-3 px-8 rounded-full hover:bg-green-700 transition duration-300">
-                    Enregistrer
-                </a>
-                <a href="<?= WEBROOT ?>/?controller=production&action=clear-cart" id="clear-cart"
-                    class="bg-red-500 text-white font-bold py-3 px-8 rounded-full hover:bg-red-700 transition duration-300">
-                    Vider le panier
-                </a>
-                <?php
+        </div>
+        <!-- Boutons Enregistrer et Annuler -->
+        <div class="mt-8 flex justify-center space-x-4">
+            <a href="<?= WEBROOT ?>/?controller=production&action=add-prod" id="add-prod"
+                class="bg-green-500 text-white font-bold py-3 px-8 rounded-full hover:bg-green-700 transition duration-300">
+                Enregistrer
+            </a>
+            <a href="<?= WEBROOT ?>/?controller=production&action=clear-cart" id="clear-cart"
+                class="bg-red-500 text-white font-bold py-3 px-8 rounded-full hover:bg-red-700 transition duration-300">
+                Vider le panier
+            </a>
+        <?php
             endif; ?>
         </div>
     </div>

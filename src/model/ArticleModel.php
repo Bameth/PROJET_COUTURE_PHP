@@ -29,19 +29,38 @@ class ArticleModel extends Model
     }
 
     public function save(array $article): int
-    {
-        if (isset($_POST['submit'])) {
-            $file_name=$_FILES['image']['name'];
-            $tempname=$_FILES['image']['tmp_name'];
-            $folder='img/'.$file_name;
+{
+    // Handle file upload
+    if (isset($_FILES['image'])) {
+        $file_name = $_FILES['image']['name'];
+        $tempname = $_FILES['image']['tmp_name'];
+        $folder = 'img/' . $file_name;
+
+        // Move uploaded file to destination folder
+        if (move_uploaded_file($tempname, $folder)) {
+            echo "<h2>File uploaded successfully.</h2>";
+        } else {
+            echo "<h2>Failed to upload file.</h2>";
         }
-        if (move_uploaded_file($tempname,$folder)) {
-           echo"<h2>File upload";
-        }else {
-            echo"<h2>File not upload";
-        }
-        return $this->executeUpdate("INSERT INTO `article` (`libelle`, `qteStock`, `prixAppro`, `typeId`, `categorieId`, `image`) VALUES (:libelle, :qteStock, :prixAppro, :typeId, :categorieId, '$file_name');", $article);
     }
+
+    // Prepare SQL query to insert article data
+    $sql = "INSERT INTO `article` (`libelle`, `qteStock`, `prixAppro`, `typeId`, `categorieId`, `image`) 
+            VALUES (:libelle, :qteStock, :prixAppro, :typeId, :categorieId, :image)";
+    
+    // Bind parameters and execute SQL query
+    $params = [
+        'libelle' => $article['libelle'],
+        'qteStock' => $article['qteStock'],
+        'prixAppro' => $article['prixAppro'],
+        'typeId' => $article['typeId'],
+        'categorieId' => $article['categorieId'],
+        'image' => $file_name // Store the file name in the database
+    ];
+
+    return $this->executeUpdate($sql, $params);
+}
+
 
     public function delete(int $id): int
     {
@@ -50,13 +69,26 @@ class ArticleModel extends Model
 
     public function modifier(array $article): int|null
     {
+        // Handle file upload
+    if (isset($_FILES['image'])) {
+        $file_name = $_FILES['image']['name'];
+        $tempname = $_FILES['image']['tmp_name'];
+        $folder = 'img/' . $file_name;
+
+        // Move uploaded file to destination folder
+        if (move_uploaded_file($tempname, $folder)) {
+            echo "<h2>File uploaded successfully.</h2>";
+        } else {
+            echo "<h2>Failed to upload file.</h2>";
+        }
+    }
         return $this->executeUpdate("UPDATE `article` SET `libelle` = :libelle, `prixAppro` = :prixAppro, `qteStock` = :qteStock, `categorieId` = :categorieId, `typeId` = :typeId, `image` = :image WHERE `id` = :articleId", [
             'libelle' => $article['libelle'],
             'prixAppro' => $article['prixAppro'],
             'qteStock' => $article['qteStock'],
             'categorieId' => $article['categorieId'],
             'typeId' => $article['typeId'],
-            'image' => $article['image'],
+            'image' => $file_name ,// Store the file name in the database
             'articleId' => $article['articleId']
         ]);
     }

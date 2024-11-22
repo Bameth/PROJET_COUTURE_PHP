@@ -6,7 +6,6 @@ use ab\Core\Model;
 class PanierModel extends Model {
     public $fournisseur=null;
     public $tailleur=null;
-    public $client=null;
     public $observation='';
     public array $articles=[];
     public $total=0;

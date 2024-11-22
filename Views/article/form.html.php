@@ -1,4 +1,5 @@
 <?php
+
 namespace ab\Views;
 
 use ab\Core\Session;
@@ -29,11 +30,18 @@ use ab\Core\Session;
     <div class="max-w-lg mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div class="bg-white p-8 rounded-lg shadow-md">
             <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Ajouter un Article</h1>
-            <form action="<?= WEBROOT ?>/?controller=article&action=save-article" method="post">
+            <form action="<?= WEBROOT ?>/?controller=article&action=save-article" method="post" enctype="multipart/form-data">
                 <?php
                 $errors = Session::get('errors') ?? [];
                 $old = $old ?? [];
                 ?>
+                <div class="mb-4">
+                    <div class="mb-4">
+                        <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image</label>
+                        <input type="file" id="image" name="image" accept="image/*"
+                            class="form-field shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                </div>
 
                 <div class="mb-4">
                     <label for="libelle" class="block text-gray-700 text-sm font-bold mb-2">Libellé</label>

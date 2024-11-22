@@ -1,4 +1,5 @@
 <?php
+
 namespace ab\Model;
 
 use ab\Core\Model;
@@ -12,24 +13,31 @@ class ProductionModel extends Model
         $this->table = "production";
     }
 
-    public function save(PanierModel $panier): int
+    public function save(PanierModel $panier, string $observation): int
     {
         $date = new \DateTime();
         $date = $date->format('Y-m-d H:i:s');
         $userId = Session::get('userConnect')['id'];
-        $this->executeUpdate("INSERT INTO `production` (`date`, `observation`, `tailleurId`, `userId`, `montant`) VALUES ('$date', 'parfait', $panier->tailleur, $userId, $panier->total);");
+
+        // Insérer la production avec l'observation
+        $this->executeUpdate("INSERT INTO `production` (`date`, `observation`, `tailleurId`, `userId`, `montant`) VALUES ('$date', :observation, $panier->tailleur, $userId, $panier->total);", ['observation' => $observation]);
+
         $prodId = $this->pdo->lastInsertId();
-        
+
         foreach ($panier->articles as $article) {
             $qteProd = $article['qteProd'];
             $qteStock = $article['qteStock'];
             $montantArticle = $article['montantArticle'];
             $idArticle = $article['id'];
-            $this->executeUpdate("INSERT INTO `detailproduction` (`qteProd`, `prodId`, `articleId`, `montant`, `observation`) VALUES ($qteProd, $prodId, $idArticle, $montantArticle, 'parfait');");
+
+            $this->executeUpdate("INSERT INTO `detailproduction` (`qteProd`, `prodId`, `articleId`, `montant`, `observation`) VALUES ($qteProd, $prodId, $idArticle, $montantArticle, :observation);", ['observation' => $observation]);
+
             $this->executeUpdate("UPDATE `article` SET `qteStock` = $qteStock + $qteProd WHERE `article`.`id` = $idArticle;");
         }
+
         return 1;
     }
+
 
     public function findAll(): array
     {
@@ -63,7 +71,7 @@ class ProductionModel extends Model
                                         $conditions", $params, true);
 
         $data = $this->executeSelect("SELECT p.*, t.nomTailleur, t.telTailleur FROM $this->table p
-                                      JOIN tailleur t ON p.tailleurId = t.id 
+                                      JOIN tailleur t ON p.tailleurId = t.id
                                       JOIN detailproduction d ON p.id = d.prodId
                                       $conditions
                                       LIMIT $page, $offset", $params);

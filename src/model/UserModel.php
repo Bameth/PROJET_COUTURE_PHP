@@ -13,5 +13,4 @@ class UserModel extends Model {
         $query = "SELECT * FROM role r, $this->table u WHERE u.roleId = r.id AND u.login = :login AND u.password = :password";
         $params = array(':login' => $login, ':password' => $password);
         return $this->executeSelect($query, $params, true);
-    }
-}
+    }}

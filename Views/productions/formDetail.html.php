@@ -31,17 +31,17 @@ use function ab\core\dd;
                 <table class="min-w-full bg-white rounded-lg shadow">
                     <thead class="bg-purple-700 text-white">
                         <tr>
-                            <th class="py-3 px-4 text-left">Article</th>
-                            <th class="py-3 px-4 text-left">Quantité produit</th>
-                            <th class="py-3 px-4 text-left">Montant Total</th>
+                            <th class="py-3 px-4 text-center">Article</th>
+                            <th class="py-3 px-4 text-center">Quantité produit</th>
+                            <th class="py-3 px-4 text-center">Montant Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($details as $detail): ?>
                             <tr class="border-b border-gray-200">
-                                <td class="py-2 px-4"><?= $detail['article']; ?></td>
-                                <td class="py-2 px-4"><?= $detail['qteProd']; ?></td>
-                                <td class="py-2 px-4"><?= $detail['montant']; ?></td>
+                                <td class="py-2 px-4 text-center"><?= $detail['article']; ?></td>
+                                <td class="py-2 px-4 text-center"><?= $detail['qteProd']; ?></td>
+                                <td class="py-2 px-4 text-center"><?= $detail['montant']; ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

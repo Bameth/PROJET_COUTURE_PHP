@@ -5,7 +5,7 @@ use PDO;
 use PDOException;
 
 class Model {
-    protected string $dsn = 'mysql:host=127.0.0.1;port=3306;dbname=ges_atelier_couture';
+    protected string $dsn = 'mysql:host=127.0.0.1;port=3306;dbname=gestion_atelier_couture';
     protected string $username = 'root';
     protected string $password = '';
     protected PDO|null $pdo = null;

@@ -5,7 +5,6 @@ use ab\Core\Model;
 
 class PanierVenteModel extends Model {
     public $fournisseur=null;
-    public $tailleur=null;
     public $client=null;
     public $observation='';
     public array $articles=[];

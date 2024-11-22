@@ -76,11 +76,13 @@ class ArticleControllers extends Controller
     }
 
     public function chargerFormulaireUpdate(int $articleId): void
-    {
+    {   $old = Session::get('old') ?? [];
+        Session::remove('old');
         $this->renderView("article/formUpdate", [
             "categories" => $this->categorieModel->findAll(),
             "types" => $this->typeModel->findAll(),
-            "article" => $this->articleModel->findById($articleId)
+            "article" => $this->articleModel->findById($articleId),
+            "old" => $old
         ]);
     }
 
@@ -137,7 +139,8 @@ class ArticleControllers extends Controller
         Validator::isEmpty($article['typeId'] ?? '', 'typeId', 'Le type est obligatoire.');
         if (!Validator::isValid()) {
             Session::add("errors", Validator::$errors);
-            $this->redirectToRoute("controller=article&action=modif-art");
+            Session::add("old", $article);
+            $this->redirectToRoute("controller=article&action=modif-art&id=" . $article['id']);
             exit;
         }
         $this->articleModel->modifier($article);
