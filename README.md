@@ -87,10 +87,10 @@ Accédez à l'application via http://localhost:8010.
 
 Structure du Projet
 index.php : Point d'entrée principal.
-config.php : Configuration de la base de données.
+Model.php : Configuration de la base de données.
 controllers/ : Contient les contrôleurs pour chaque fonctionnalité.
 models/ : Contient les modèles pour gérer les données.
 views/ : Contient les fichiers de vue pour l'interface utilisateur.
 assets/ : Contient les ressources (CSS, JS, images).
 Auteur
-Développé par Ameth BA.
+Développé par Ameth BA étudiant en Génie Logiciel.
