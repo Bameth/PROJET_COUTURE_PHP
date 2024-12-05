@@ -81,14 +81,19 @@ Frontend
 
 🚀 Installation
 1️⃣ Clonez le dépôt du projet
+
 git clone <url_du_dépôt>
 
 2️⃣ Installation des dépendances avec Composer
+
 Assurez-vous que Composer est installé sur votre machine, puis exécutez :
+
 composer install
 
 3️⃣ Ajout de Tailwind CSS
+
 Si Tailwind CSS n'est pas encore configuré, installez-le avec npm :
+
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init
 Configurez Tailwind dans le fichier tailwind.config.js.
@@ -96,6 +101,7 @@ Compilez les styles avec :
 npx tailwindcss -i ./src/input.css -o ./public/output.css --watch
 
 4️⃣ Configurez la base de données
+
 Importez le fichier database.sql dans votre base de données MySQL/PostgreSQL.
 Modifiez les informations de connexion à la base dans le fichier Model.php.
 
