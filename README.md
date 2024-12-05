@@ -13,32 +13,37 @@ L’application propose des fonctionnalités adaptées aux rôles suivants :
 💼 Vendeur.
 
 ✨ Fonctionnalités
-
 📦 Gestion des Stocks
 Enregistrement des approvisionnements :
+
 🗓️ Date
 📊 Quantité, Prix unitaire, Montant total
 📝 Observation
 📌 Article (tissus, boutons, aiguilles, etc.)
 🚚 Fournisseur
 Recherche et filtrage :
+
 📅 Par date
 🛍️ Par article
 🚚 Par fournisseur
 🛠️ Gestion de la Production
 Enregistrement des productions :
+
 🗓️ Date
 📊 Quantité produite
 📝 Observation
 Listing des productions :
+
 📅 Productions journalières
 🛍️ Productions par article
 🛒 Gestion des Ventes
 Enregistrement des ventes :
+
 🗓️ Date
 📊 Quantité vendue, Prix unitaire, Montant total
 📝 Observation
 Recherche et filtrage :
+
 📅 Par date
 🛍️ Par article
 👤 Par client
@@ -67,7 +72,6 @@ Gestion des rôles :
 🛠️ Responsable de Production : Gestion des productions.
 🛒 Vendeur : Gestion des ventes.
 ⚙️ Prérequis Techniques
-
 Backend
 💻 Langage : PHP
 🗄️ Base de données : MySQL ou PostgreSQL
@@ -77,17 +81,20 @@ Frontend
 💡 JavaScript pour les interactions dynamiques
 🚀 Installation
 
-Clonez le dépôt du projet :
+1-Clonez le dépôt du projet :
 git clone <url_du_dépôt>
-Configurez la base de données :
+
+2-Configurez la base de données :
 Importez le fichier database.sql dans votre base de données MySQL.
 Modifiez les informations de connexion à la base dans le fichier Model.php.
-Lancez le serveur :
-php -S localhost:8010 -t public
-Accédez à l'application :
-🌐 http://localhost:8010
-📂 Structure du Projet
 
+3-Lancez le serveur :
+php -S localhost:8010 -t public
+
+4-Accédez à l'application :
+🌐 http://localhost:8010
+
+📂 Structure du Projet
 index.php : Point d'entrée principal.
 Model.php : Configuration de la base de données.
 controllers/ : Contrôleurs pour chaque fonctionnalité.
@@ -95,6 +102,6 @@ models/ : Modèles pour gérer les données.
 views/ : Fichiers de vue pour l'interface utilisateur.
 assets/ : Ressources (CSS, JS, images).
 👨‍💻 Auteur
-
 Ameth BA
 🎓 Étudiant en Génie Logiciel
+
