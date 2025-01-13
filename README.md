@@ -2,7 +2,7 @@ Gestion d’un Atelier de Couture
 
 📋 Description
 
-Ce projet est une application web développée en PHP pour la gestion des activités d’un atelier de couture. Elle permet de gérer :
+Ce projet est une application web From Scratch développée en PHP pour la gestion des activités d’un atelier de couture. Elle permet de gérer :
 
 📦 Le stock,
 
